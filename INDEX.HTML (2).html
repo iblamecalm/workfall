@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Editor Profile</h1>
+    </header>
+
+    <section class="container">
+        <h2 id="editorNameDisplay"></h2>
+        <p>Email: <span id="editorEmailDisplay"></span></p>
+        <p>Portfolio: <a id="editorPortfolioDisplay" href="#" target="_blank"></a></p>
+        <p>Specialization: <span id="editorSpecializationDisplay"></span></p>
+
+        <label>Upload Profile Picture:</label>
+        <input type="file" id="profilePicUpload">
+        <img id="profilePic" src="" alt="Profile Picture" style="display:none; width: 100px;">
+
+        <button id="saveProfile">Save Profile</button>
+
+        <h2>Connect with Clients</h2>
+        <button id="connectBtn">Connect</button>
+    </section>
+
+    <script>
+        // Load Editor Data
+        document.getElementById("editorNameDisplay").innerText = localStorage.getItem("editorName");
+        document.getElementById("editorEmailDisplay").innerText = localStorage.getItem("editorEmail");
+        document.getElementById("editorPortfolioDisplay").innerText = localStorage.getItem("editorPortfolio");
+        document.getElementById("editorPortfolioDisplay").href = localStorage.getItem("editorPortfolio");
+        document.getElementById("editorSpecializationDisplay").innerText = localStorage.getItem("editorSpecialization");
+
+        // Profile Picture Upload
+        document.getElementById("profilePicUpload").addEventListener("change", function(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                localStorage.setItem("profilePic", reader.result);
+                document.getElementById("profilePic").src = reader.result;
+                document.getElementById("profilePic").style.display = "block";
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        // Load Profile Picture
+        if (localStorage.getItem("profilePic")) {
+            document.getElementById("profilePic").src = localStorage.getItem("profilePic");
+            document.getElementById("profilePic").style.display = "block";
+        }
+
+        // Connect Button Redirects to WhatsApp
+        document.getElementById("connectBtn").addEventListener("click", function() {
+            window.location.href = "https://wa.me/YOUR_PHONE_NUMBER"; // Replace with your number
+        });
+    </script>
+
+</body>
+</html>
